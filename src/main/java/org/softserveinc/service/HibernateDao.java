@@ -29,4 +29,8 @@ public class HibernateDAO {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    public User findUserByUsername(String username) {
+        return null;
+    }
 }
