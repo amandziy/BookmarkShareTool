@@ -20,9 +20,6 @@
 		<property name="maxActive" value="10"/>
 	</bean>
 
-    <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> <!--.hibernate3.annotation.AnnotationSessionFactoryBean">-->
 		<property name="dataSource" ref="dataSource"/>
@@ -50,10 +47,12 @@
     <context:component-scan base-package="org.softserveinc"/>
 
 
-    <!-- Imports datasource configuration -->
+    <!-- Imports security configuration -->
+    <import resource="bookmarks-security.xml"/>
+
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
-    <import resource="bookmarks-security.xml"/>
+
 
 </beans>
