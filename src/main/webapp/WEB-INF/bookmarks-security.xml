@@ -36,6 +36,7 @@
             </beans:list>
         </beans:property>
     </beans:bean>
+
     <authentication-manager>
         <authentication-provider user-service-ref="customUserDetailsService">
             <password-encoder hash="plaintext"/>
