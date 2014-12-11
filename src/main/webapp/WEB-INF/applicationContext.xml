@@ -23,7 +23,6 @@
 		<property name="maxActive" value="10"/>
 	</bean>
 
-
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> <!--.hibernate3.annotation.AnnotationSessionFactoryBean">-->
 		<property name="dataSource" ref="dataSource"/>
 		<property name="packagesToScan" value="org.softserveinc.domain"/>
@@ -41,6 +40,7 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
+
     <!-- Activates various annotations to be detected in bean classes -->
     <context:annotation-config/>
 
@@ -48,6 +48,8 @@
      For example @Controller and @Service. Make sure to set the correct base-package -->
     <context:component-scan base-package="org.softserveinc"/>
 
+
+    <!-- Imports datasource configuration -->
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
