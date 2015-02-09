@@ -1,65 +1,57 @@
 package org.softserveinc.converters;
 
-import org.softserveinc.domain.Bookmark;
 import org.softserveinc.domain.BookmarkReference;
-import org.softserveinc.repository.HibernateDAO;
-import org.softserveinc.service.BookmarkService;
-import org.softserveinc.util.GoogleTreeNode;
-import org.softserveinc.util.GoogleTreeNodeWrapper;
-import org.softserveinc.util.NodeType;
-import org.springframework.stereotype.Service;
+import org.softserveinc.util.ReferenceType;
+import org.softserveinc.util.json.GoogleJson;
+import org.softserveinc.util.json.GoogleTreeNode;
+import org.softserveinc.util.json.NodeType;
 
-import javax.inject.Inject;
 import java.util.*;
 
-@Service
-public class GoogleJsonBuilder{
+import static org.softserveinc.util.Constants.ROOT_FOLDER;
 
-    @Inject
-    BookmarkService bookmarkService;
-    @Inject
-    HibernateDAO hibernateDAO;
+public class GoogleExtensionJsonBuilder extends AbstractJsonBuilder{
 
-    Map<Integer, Bookmark> mapOfIdsAndBookmarks;
+    private int treeNodeId=0;
+
+    @Override
+    public GoogleJson buildJsonByOwnerId() {
 
 
-    public GoogleTreeNodeWrapper buildJson(String userId) {
-        GoogleTreeNodeWrapper googleTreeNodeWrapper =new GoogleTreeNodeWrapper();
-        List<BookmarkReference> bookmarkReferences = hibernateDAO.getReferenceByUserId(userId);
+        GoogleJson googleJson =new GoogleJson();
         if(bookmarkReferences.size() == 0) {
-            return googleTreeNodeWrapper;
+            return googleJson;
         }
-        Set<Integer> bookmarkIds= new HashSet<>();
-        mapOfIdsAndBookmarks = new HashMap<>();
+        Collections.sort(bookmarkReferences, new Comparator<BookmarkReference>() {
+            @Override
+            public int compare(BookmarkReference o1, BookmarkReference o2) {
+                return o1.getPath().compareTo(o2.getPath());
 
-        for (BookmarkReference bookmarkReference : bookmarkReferences) {
-            bookmarkIds.add(bookmarkReference.getBookmarkId());
-        }
-        List<Bookmark> bookmarks = hibernateDAO.getBookmarksByIds(bookmarkIds);
-        for (Bookmark bookmark : bookmarks) {
-            mapOfIdsAndBookmarks.put(bookmark.getBookmarkId(), bookmark);
-        }
+            }
+        });
 
-        GoogleTreeNode synced = googleTreeNodeWrapper.getRoots().getSynced();
+
+        GoogleTreeNode synced = googleJson.getRoots().getSynced();
         synced.setChildren(new ArrayList<GoogleTreeNode>());
 
         for (BookmarkReference bookmarkReference : bookmarkReferences) {
-            List<String> chainOfFolders = bookmarkReference.getPath()==null?null:new ArrayList<>(Arrays.asList(bookmarkReference.getPath().split("/")));
+            List<String> chainOfFolders = new ArrayList<>(Arrays.asList(bookmarkReference.getPath().split("/")));
             buildTree(chainOfFolders, synced, bookmarkReference);
         }
-        return googleTreeNodeWrapper;
+        return googleJson;
 
 
     }
 
 
     private void buildTree( List<String> chainOfFolders, GoogleTreeNode parentNode, BookmarkReference bookmarkReference){
-        // chainOfFolders == null when it's bookmark - most inner node
-        if(chainOfFolders==null||chainOfFolders.size()==0){
+        // chainOfFolders.size()==0 means we created all chain of folders and now we should create bookmark
+        // chainOfFolders.get(0).equals("_root") when bookmark is in root
+        if(chainOfFolders.size()==0||chainOfFolders.get(0).equals(ROOT_FOLDER)){
             parentNode.getChildren().add(new GoogleTreeNode(null,
                     bookmarkReference.getCreated(),
                     bookmarkReference.getCreated()
-                    ,bookmarkReference.getBookmarkReferenceId(),
+                    ,++treeNodeId,
                     mapOfIdsAndBookmarks.get(bookmarkReference.getBookmarkId()).getName(),
                     NodeType.url,
                     mapOfIdsAndBookmarks.get(bookmarkReference.getBookmarkId()).getURL()));
@@ -74,7 +66,7 @@ public class GoogleJsonBuilder{
                     buildTree(chainOfFolders, existingNode,bookmarkReference);
                     return;
                 }
-                    buildTree(null, existingNode,bookmarkReference);
+                    buildTree(new ArrayList<String>(), existingNode, bookmarkReference);
                     return;
 
             }
@@ -84,7 +76,7 @@ public class GoogleJsonBuilder{
         GoogleTreeNode newFolderNode = new GoogleTreeNode(new ArrayList<GoogleTreeNode>(),
                 bookmarkReference.getCreated(),
                 bookmarkReference.getCreated()
-                ,bookmarkReference.getBookmarkReferenceId(),
+                ,++treeNodeId,
                 chainOfFolders.get(0),
                 NodeType.folder,
                 null);

@@ -3,12 +3,7 @@ package org.softserveinc.domain;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
-/**
- * Created by vv on 05.12.2014.
- */
 @Entity
 @Table(name = "TEAM")
 public class Team {

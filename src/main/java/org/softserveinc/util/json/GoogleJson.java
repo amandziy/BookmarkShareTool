@@ -1,12 +1,7 @@
-package org.softserveinc.util;
+package org.softserveinc.util.json;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by okush on 2/3/15.
- */
-public class GoogleTreeNodeWrapper {
+public class GoogleJson extends AbstractJsonObject {
     private GoogleRoots roots= new GoogleRoots();
     private int version=1;
 

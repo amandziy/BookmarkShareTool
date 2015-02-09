@@ -1,13 +1,10 @@
-package org.softserveinc.util;
+package org.softserveinc.util.json;
 
 import org.softserveinc.domain.Bookmark;
 
 import java.util.List;
 
-/**
- * Created by vv on 14.01.2015.
- */
-public class TreeNode {
+public class TreeNode extends AbstractJsonObject {
     private String folderName;
     private Bookmark bookmark;
     private List<TreeNode> listOfTreeNodes;

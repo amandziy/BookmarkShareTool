@@ -12,6 +12,7 @@
         <intercept-url pattern="/userProfile" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/signup" access="isAnonymous()"/>
         <intercept-url pattern="/login" access="isAnonymous()"/>
+        <intercept-url pattern="/rest/bookmark/google" access="hasRole('ROLE_USER')"/>
 
         <form-login login-page="/login"
                     authentication-failure-url="/login/failure"

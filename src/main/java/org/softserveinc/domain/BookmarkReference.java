@@ -1,13 +1,11 @@
 package org.softserveinc.domain;
 
 import org.softserveinc.util.ReferenceType;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
-@Component
 @Entity
 @Table(name = "BOOKMARK_REFERENCE")
 public class BookmarkReference {

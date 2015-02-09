@@ -13,6 +13,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter{
 
     @Inject
     UserProvider userProvider;
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (null == modelAndView){

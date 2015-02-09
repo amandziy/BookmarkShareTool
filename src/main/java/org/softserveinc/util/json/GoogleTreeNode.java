@@ -1,13 +1,9 @@
-package org.softserveinc.util;
-
-import org.softserveinc.domain.Bookmark;
+package org.softserveinc.util.json;
 
 import java.sql.Date;
 import java.util.List;
 
-/**
- * Created by vv on 14.01.2015.
- */
+
 public class GoogleTreeNode{
     private List<GoogleTreeNode> children;
     private Date date_added;

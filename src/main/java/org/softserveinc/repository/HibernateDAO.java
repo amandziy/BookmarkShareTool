@@ -8,18 +8,20 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.softserveinc.domain.*;
 import org.softserveinc.util.ReferenceType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.*;
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
 public class HibernateDAO {
 
-    @Autowired
+    @Inject
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {

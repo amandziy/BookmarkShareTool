@@ -2,9 +2,6 @@ package org.softserveinc.domain;
 
 import javax.persistence.*;
 
-/**
- * Created by vv on 09.12.2014.
- */
 
 @Entity
 @Table(name="USERS_TEAMS")

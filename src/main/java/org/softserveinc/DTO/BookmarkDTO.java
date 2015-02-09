@@ -1,8 +1,5 @@
 package org.softserveinc.DTO;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class BookmarkDTO {
 
     private String name;
