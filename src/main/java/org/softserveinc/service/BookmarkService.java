@@ -22,10 +22,13 @@ public class BookmarkService {
 
     public void saveBookmark(BookmarkDTO bookmarkDTO) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Bookmark bookmark= new Bookmark(bookmarkDTO.getName(),bookmarkDTO.getURL()==null?ROOT_FOLDER:bookmarkDTO.getURL(),bookmarkDTO.getDescription());
+        Bookmark bookmark= new Bookmark(bookmarkDTO.getName(),bookmarkDTO.getUrl(),bookmarkDTO.getDescription());
         Integer bookmarkID= hibernateDAO.saveBookmarkIntoDB(bookmark);
+        if( bookmarkDTO.getPath()==null)
+            bookmarkDTO.setPath(ROOT_FOLDER);
+        int  nextIndex= (int)hibernateDAO.countReferencesByPath( bookmarkDTO.getPath());
         //TODO make possibility to add bookmark with reference to team
-        BookmarkReference bookmarkReference = new BookmarkReference(bookmarkID, bookmarkDTO.getPath(), new Date(System.currentTimeMillis()),user.getUserId(),ReferenceType.USER);
+        BookmarkReference bookmarkReference = new BookmarkReference(bookmarkID, nextIndex, bookmarkDTO.getPath()==null?ROOT_FOLDER:bookmarkDTO.getPath(), new Date(System.currentTimeMillis()),user.getUserId(),ReferenceType.USER);
         hibernateDAO.saveBookmarkReference(bookmarkReference);
     }
 
@@ -37,9 +40,9 @@ public class BookmarkService {
         return hibernateDAO.getReferenceByTeamId(teamId);
     }
 
-    public  Map<Integer, Bookmark> getMapOfIdsAndBookmarks(List<BookmarkReference> bookmarkReferences){
+    public  Map<Integer, Bookmark> getBookmarkMap(List<BookmarkReference> bookmarkReferences){
         Set<Integer> bookmarkIds= new HashSet<>();
-        Map<Integer, Bookmark> mapOfIdsAndBookmarks = new HashMap<>();
+        Map<Integer, Bookmark> bookmarkMap = new HashMap<>();
 
         for (BookmarkReference bookmarkReference : bookmarkReferences) {
             bookmarkIds.add(bookmarkReference.getBookmarkId());
@@ -48,13 +51,11 @@ public class BookmarkService {
         List<Bookmark> bookmarks = hibernateDAO.getBookmarksByIds(bookmarkIds);
 
         for (Bookmark bookmark : bookmarks) {
-            mapOfIdsAndBookmarks.put(bookmark.getBookmarkId(), bookmark);
+            bookmarkMap.put(bookmark.getBookmarkId(), bookmark);
         }
-        return mapOfIdsAndBookmarks;
+        return bookmarkMap;
 
     }
-
-
 
 }
 

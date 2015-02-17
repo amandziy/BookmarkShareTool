@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 
+/**
+ * Entity for storing teams into db
+ */
 @Entity
 @Table(name = "TEAM")
 public class Team {

@@ -14,6 +14,7 @@ public class BookmarkReference {
     private Integer bookmarkReferenceId;
     @NotNull
     private Integer bookmarkId;
+    private Integer bookmarkIndex;
     private String path;
     private Date created;
     @NotNull
@@ -24,8 +25,9 @@ public class BookmarkReference {
     public BookmarkReference() {
     }
 
-    public BookmarkReference(Integer bookmarkId, String path, Date created, Integer referenceId, ReferenceType referenceType) {
+    public BookmarkReference(Integer bookmarkId, Integer bookmarkIndex, String path, Date created, Integer referenceId, ReferenceType referenceType) {
         this.bookmarkId = bookmarkId;
+        this.bookmarkIndex = bookmarkIndex;
         this.path = path;
         this.created = created;
         this.referenceId = referenceId;
@@ -46,6 +48,14 @@ public class BookmarkReference {
 
     public void setBookmarkId(Integer bookmarkId) {
         this.bookmarkId = bookmarkId;
+    }
+
+    public Integer getBookmarkIndex() {
+        return bookmarkIndex;
+    }
+
+    public void setBookmarkIndex(Integer bookmarkIndex) {
+        this.bookmarkIndex = bookmarkIndex;
     }
 
     public Integer getReferenceId() {

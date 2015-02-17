@@ -2,6 +2,9 @@ package org.softserveinc.domain;
 
 import javax.persistence.*;
 
+/**
+ * Entity for storing relationship between users and teams into db
+ */
 
 @Entity
 @Table(name="USERS_TEAMS")

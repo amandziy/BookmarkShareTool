@@ -7,7 +7,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * Entity for storing relationship between user and role into db
+ */
 @Entity
 @Table(name = "ROLE")
 public class UserRole {

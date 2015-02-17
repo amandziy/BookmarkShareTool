@@ -5,6 +5,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.softserveinc.domain.*;
 import org.softserveinc.util.ReferenceType;
@@ -92,6 +93,12 @@ public class HibernateDAO {
         Session session = getSessionFactory().getCurrentSession();
         Team team = (Team) session.get(Team.class, Integer.parseInt(teamId));
         return team;
+    }
+
+    public User getUserById(String localUserId) {
+        Session session = getSessionFactory().getCurrentSession();
+        User user = (User) session.get(User.class, Integer.parseInt(localUserId));
+        return user;
     }
 
     public List<User> getUsersExceptGivenUserIds(Set<Integer> userIds) {
@@ -198,5 +205,32 @@ public class HibernateDAO {
     public void saveBookmarkReference(BookmarkReference bookmarkReference) {
         Session session = getSessionFactory().getCurrentSession();
         session.save(bookmarkReference);
+    }
+
+    public void saveProviderUserLocalUser(ProviderUserLocalUser providerUserLocalUser) {
+        Session session = getSessionFactory().getCurrentSession();
+        session.save(providerUserLocalUser);
+    }
+
+    public ProviderUserLocalUser getProviderUserLocalUserByProvIdAndProvUserId(String providerId, String providerUserId) {
+        Session session = getSessionFactory().getCurrentSession();
+        Criteria criteria = session.createCriteria(ProviderUserLocalUser.class);
+        criteria.add(Restrictions.and(Restrictions.eq("providerId", providerId),Restrictions.eq("providerUserId", providerUserId) ));
+        List<ProviderUserLocalUser> listOfProviderUserLocalUser = (List<ProviderUserLocalUser>) criteria.list();
+
+        ProviderUserLocalUser providerUserLocalUser = null;
+
+        if(!listOfProviderUserLocalUser.isEmpty()) {
+            providerUserLocalUser = listOfProviderUserLocalUser.get(0);
+        }
+
+        return providerUserLocalUser;
+    }
+
+    public long countReferencesByPath(String path) {
+        Session session = getSessionFactory().getCurrentSession();
+        Criteria criteria = session.createCriteria(BookmarkReference.class);
+        criteria.add(Restrictions.eq("path", path));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
 }

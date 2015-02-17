@@ -1,5 +1,6 @@
 package org.softserveinc.service;
 
+import org.softserveinc.domain.ProviderUserLocalUser;
 import org.softserveinc.domain.Team;
 import org.softserveinc.domain.User;
 import org.softserveinc.domain.UserTeam;
@@ -78,7 +79,9 @@ public class UserService {
             teamsIds.add(userTeam.getTeamId());
         }
 
-        teams = hibernateDAO.getTeamsByTeamIds(teamsIds);
+        if(!teamsIds.isEmpty()) {
+            teams = hibernateDAO.getTeamsByTeamIds(teamsIds);
+        }
 
         return teams;
     }
@@ -140,4 +143,17 @@ public class UserService {
         hibernateDAO.updateUserTeamInDB(userTeam);
     }
 
+    public void saveProviderUserLocalUser(ProviderUserLocalUser providerUserLocalUser) {
+        hibernateDAO.saveProviderUserLocalUser(providerUserLocalUser);
+    }
+
+    public ProviderUserLocalUser getProviderUserLocalUserByProvIdAndProvUserId(String providerId, String providerUserId) {
+        ProviderUserLocalUser providerUserLocalUser = hibernateDAO.getProviderUserLocalUserByProvIdAndProvUserId(providerId, providerUserId);
+        return providerUserLocalUser;
+    }
+
+    public User getUserById(String localUserId) {
+        User user = hibernateDAO.getUserById(localUserId);
+        return user;
+    }
 }

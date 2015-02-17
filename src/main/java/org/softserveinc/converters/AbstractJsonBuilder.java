@@ -10,21 +10,26 @@ import org.softserveinc.util.json.AbstractJsonObject;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Design pattern "Builder" is used.
+ * This class provides required preparation steps for building Json tree with bookmarks.
+ */
 public abstract class AbstractJsonBuilder {
     BookmarkService bookmarkService;
     List<BookmarkReference> bookmarkReferences;
-    Map<Integer, Bookmark> mapOfIdsAndBookmarks;
+    Map<Integer, Bookmark> bookmarkMap;
 
     void setBookmarkService(BookmarkService bookmarkService){
         this.bookmarkService = bookmarkService;
     }
 
-    void setMapOfIdsAndBookmarks(){
-        mapOfIdsAndBookmarks = bookmarkService.getMapOfIdsAndBookmarks(bookmarkReferences);
+    void setBookmarkMap(){
+        bookmarkMap = bookmarkService.getBookmarkMap(bookmarkReferences);
     }
 
-    void setBookmarkReferencesByOwnerId(ReferenceType owner, String referenceId){
-        switch (owner){
+    void setBookmarkReferencesByOwnerId(ReferenceType ownerReferenceType, String referenceId){
+        switch (ownerReferenceType){
             case TEAM: bookmarkReferences = bookmarkService.getBookmarkReferencesByTeamId(referenceId);
                 break;
             case USER: bookmarkReferences = bookmarkService.getBookmarkReferencesByUserId(referenceId);

@@ -2,13 +2,17 @@ package org.softserveinc.converters;
 
 import org.softserveinc.domain.Bookmark;
 import org.softserveinc.domain.BookmarkReference;
-import org.softserveinc.util.ReferenceType;
 import org.softserveinc.util.json.TreeNode;
 
 import java.util.*;
 
 import static org.softserveinc.util.Constants.ROOT_FOLDER;
 
+/**
+ * This class is used to build tree of bookmarks.
+ *  It provides json format that is acceptable for web application with Angular treeview library that builds tree
+ * according to input Json
+ */
 public class DefaultJsonBuilder extends AbstractJsonBuilder{
 
     @Override
@@ -28,10 +32,9 @@ public class DefaultJsonBuilder extends AbstractJsonBuilder{
             String path = bookmarkReference.getPath();
 
             if(path.equals(ROOT_FOLDER)) {
-                Bookmark bookmark = mapOfIdsAndBookmarks.get(bookmarkReference.getBookmarkId());
-
+                Integer bookmarkId = bookmarkReference.getBookmarkId();
                 TreeNode treeNode = new TreeNode();
-                treeNode.setBookmark(bookmark);
+                treeNode.setBookmark(bookmarkMap.get(bookmarkId));
                 treeNode.setListOfTreeNodes(new ArrayList<TreeNode>());
 
                 mainTreeNode.getListOfTreeNodes().add(treeNode);
@@ -52,7 +55,7 @@ public class DefaultJsonBuilder extends AbstractJsonBuilder{
             List<String> chainOfFolders = Arrays.asList(path.split("/"));
             Integer bookmarkId = Integer.parseInt(pathAndId.substring(pathAndId.indexOf(":") + 1));
 
-            buildTree(chainOfFolders, mainTreeNode, bookmarkId, mapOfIdsAndBookmarks);
+            buildTree(chainOfFolders, mainTreeNode, bookmarkId, bookmarkMap);
         }
 
         return mainTreeNode;

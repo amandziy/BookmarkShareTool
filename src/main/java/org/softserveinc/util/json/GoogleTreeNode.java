@@ -4,24 +4,50 @@ import java.sql.Date;
 import java.util.List;
 
 
-public class GoogleTreeNode{
+public class GoogleTreeNode extends AbstractJsonObject{
     private List<GoogleTreeNode> children;
-    private Date date_added;
-    private Date date_modified;
+    private Date dateAdded;
+    private Date dateGroupModified;
     private Integer id;
-    private String name;
-    private NodeType type;
+    private Integer index;
+    private Integer parentId;
+    private String title;
+    private transient NodeType type;
     private String url;
 
-    public GoogleTreeNode(List<GoogleTreeNode> children, Date date_added, Date date_modified, Integer id, String name, NodeType type, String url) {
-        this.children = children;
-        this.date_added = date_added;
-        this.date_modified = date_modified;
+    //This constructor is used when node is a bookmark
+    public GoogleTreeNode(Date dateAdded, Integer id, Integer index, Integer parentId, String title, String url) {
+        this.dateAdded = dateAdded;
         this.id = id;
-        this.name = name;
-        this.type = type;
+        this.index = index;
+        this.parentId = parentId;
+        this.title = title;
+        this.type = NodeType.url;
         this.url = url;
     }
+
+    //This constructor is used when node is a folder
+    public GoogleTreeNode(List<GoogleTreeNode> children, Date dateAdded, Date dateGroupModified, Integer id, Integer index, Integer parentId, String title) {
+        this.children = children;
+        this.dateAdded = dateAdded;
+        this.dateGroupModified = dateGroupModified;
+        this.id = id;
+        this.index = index;
+        this.parentId = parentId;
+        this.title = title;
+        this.type = NodeType.folder;
+    }
+
+    //This constructor is used when node is a root folder
+    public GoogleTreeNode(List<GoogleTreeNode> children, Date dateAdded, Integer id, String title) {
+        this.children = children;
+        this.dateAdded = dateAdded;
+        this.id = id;
+        this.title = title;
+        this.type = NodeType.folder;
+
+    }
+
     public GoogleTreeNode(){}
 
     public List<GoogleTreeNode> getChildren() {
@@ -32,20 +58,20 @@ public class GoogleTreeNode{
         this.children = children;
     }
 
-    public Date getDate_added() {
-        return date_added;
+    public Date getDateAdded() {
+        return dateAdded;
     }
 
-    public void setDate_added(Date date_added) {
-        this.date_added = date_added;
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
-    public Date getDate_modified() {
-        return date_modified;
+    public Date getDateGroupModified() {
+        return dateGroupModified;
     }
 
-    public void setDate_modified(Date date_modified) {
-        this.date_modified = date_modified;
+    public void setDateGroupModified(Date dateGroupModified) {
+        this.dateGroupModified = dateGroupModified;
     }
 
     public Integer getId() {
@@ -56,12 +82,28 @@ public class GoogleTreeNode{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getIndex() {
+        return index;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public NodeType getType() {

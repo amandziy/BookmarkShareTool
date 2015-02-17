@@ -3,13 +3,13 @@ package org.softserveinc.DTO;
 public class BookmarkDTO {
 
     private String name;
-    private String URL;
+    private String url;
     private String path;
     private String description;
 
-    public BookmarkDTO(String name, String URL, String path, String description) {
+    public BookmarkDTO(String name, String url, String path, String description) {
         this.name = name;
-        this.URL = URL;
+        this.url = url;
         this.path = path;
         this.description = description;
     }
@@ -24,12 +24,12 @@ public class BookmarkDTO {
         this.name = name;
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getPath() {
