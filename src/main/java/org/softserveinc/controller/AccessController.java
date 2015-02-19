@@ -3,7 +3,6 @@ package org.softserveinc.controller;
 import org.softserveinc.domain.User;
 import org.softserveinc.domain.UserRole;
 import org.softserveinc.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
@@ -22,9 +22,9 @@ import java.util.HashSet;
 @Controller
 public class AccessController {
 
-    @Autowired
+    @Inject
     private UserService userService;
-    @Autowired
+    @Inject
     private AuthenticationManager authenticationManager;
 
     @RequestMapping("/login")

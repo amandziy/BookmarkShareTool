@@ -5,15 +5,16 @@ import org.softserveinc.domain.Team;
 import org.softserveinc.domain.User;
 import org.softserveinc.domain.UserTeam;
 import org.softserveinc.repository.HibernateDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.*;
+
 
 @Service
 public class UserService {
 
-    @Autowired
+    @Inject
     private HibernateDAO hibernateDAO;
 
     public void saveUserIntoDB(User user) {

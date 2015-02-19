@@ -1,11 +1,7 @@
 package org.softserveinc.domain;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
-import java.sql.Date;
 
-@Component
 @Entity
 @Table(name = "BOOKMARK")
 public class Bookmark {

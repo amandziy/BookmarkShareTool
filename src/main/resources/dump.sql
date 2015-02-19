@@ -28,7 +28,7 @@ CREATE TABLE `bookmark` (
   `URL` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`bookmarkId`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `bookmark` (
 
 LOCK TABLES `bookmark` WRITE;
 /*!40000 ALTER TABLE `bookmark` DISABLE KEYS */;
-INSERT INTO `bookmark` VALUES (1,'Google Name','https://www.google.com.ua/','Google Start Page'),(2,'CSS course Google Name','http://htmlbook.ru/css','CSS study'),(3,'Angular Name','https://docs.angularjs.org/api/ng/directive/ngDisabled','Angular tutorial'),(4,'Angular Name','http://ngmodules.org/modules/angular.treeview','Angular tree view'),(5,'UI Name','http://www.w3schools.com/','UI Tutorials'),(6,'HTML Name','http://www.w3schools.com/html/default.asp','HTML Tutorials'),(7,'','http://www.w3schools.com/css/default.asp','CSS Tutorials'),(11,'bookmarkDTO','bookmarkDTO','bookmarkDTO'),(12,'bookmarkDTO','bookmarkDTO','bookmarkDTO'),(13,'bookmarkDTO','bookmarkDTO','bookmarkDTO'),(14,'Stack Overflow','http://stackoverflow.com',''),(15,'google','https://www.google.com.ua',NULL),(16,'facebook','https://www.facebook.com/',NULL),(17,'','http://godzilla.org.ua/',NULL),(18,'YouTube','https://www.youtube.com',NULL),(19,'CS','http://counter-strike.com.ua/','counter strike'),(20,'Github','https://github.com/',NULL),(21,'Zaycev Net','http://zaycev.net/',NULL),(22,'Google Translator','https://translate.google.com',NULL),(23,NULL,'http://developerslife.ru/',NULL),(24,NULL,'http://developerslife.ru/',NULL),(25,NULL,'http://developerslife1.ru/',NULL),(26,'vasa','vasa',NULL);
+INSERT INTO `bookmark` VALUES (1,'Google Name','https://www.google.com.ua/','Google Start Page'),(2,'CSS course Google Name','http://htmlbook.ru/css','CSS study'),(3,'Angular Name','https://docs.angularjs.org/api/ng/directive/ngDisabled','Angular tutorial'),(4,'Angular Name','http://ngmodules.org/modules/angular.treeview','Angular tree view'),(5,'UI Name','http://www.w3schools.com/','UI Tutorials'),(6,'HTML Name','http://www.w3schools.com/html/default.asp','HTML Tutorials'),(7,'','http://www.w3schools.com/css/default.asp','CSS Tutorials'),(14,'Stack Overflow','http://stackoverflow.com',''),(15,'google','https://www.google.com.ua',NULL),(16,'facebook','https://www.facebook.com/',NULL),(17,'','http://godzilla.org.ua/',NULL),(18,'YouTube','https://www.youtube.com',NULL),(19,'CS','http://counter-strike.com.ua/','counter strike'),(20,'Github','https://github.com/',NULL),(21,'Zaycev Net','http://zaycev.net/',NULL),(22,'Google Translator','https://translate.google.com',NULL),(23,NULL,'http://developerslife.ru/',NULL),(24,NULL,'http://developerslife.ru/',NULL),(25,NULL,'http://developerslife1.ru/',NULL),(26,'vasa','vasa',NULL),(27,NULL,'fasdfas',NULL),(32,'test','test','test');
 /*!40000 ALTER TABLE `bookmark` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,12 +51,13 @@ DROP TABLE IF EXISTS `bookmark_reference`;
 CREATE TABLE `bookmark_reference` (
   `bookmarkReferenceId` int(11) NOT NULL AUTO_INCREMENT,
   `bookmarkId` int(11) NOT NULL,
+  `bookmarkIndex` int(11) NOT NULL,
   `created` date DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `referenceId` int(11) NOT NULL,
   `referenceType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`bookmarkReferenceId`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,8 +66,33 @@ CREATE TABLE `bookmark_reference` (
 
 LOCK TABLES `bookmark_reference` WRITE;
 /*!40000 ALTER TABLE `bookmark_reference` DISABLE KEYS */;
-INSERT INTO `bookmark_reference` VALUES (1,1,NULL,'Tutorials/Angular',3,'USER'),(2,2,NULL,'Tutorials',3,'USER'),(3,3,NULL,NULL,3,'USER'),(4,1,NULL,'Favorite/Folder1',4,'TEAM'),(5,3,NULL,'Favorite/Folder2',4,'TEAM'),(6,4,NULL,NULL,4,'TEAM'),(7,5,NULL,'Tutorials/UI',3,'USER'),(8,6,NULL,'Tutorials/UI',3,'USER'),(9,7,NULL,'Fun',3,'USER'),(10,7,NULL,'Tutorials/Angular',3,'USER'),(11,7,NULL,'Tutorials/UI',3,'USER'),(12,1,NULL,'Traveling/Europe',4,'TEAM'),(13,2,NULL,'Traveling/Europe',4,'TEAM'),(14,7,NULL,'Traveling/Europe',4,'TEAM'),(15,3,NULL,'Traveling/Africa',4,'TEAM'),(16,4,NULL,'Traveling/Africa/SouthernAfrica',4,'TEAM'),(17,5,NULL,'Traveling/Africa/SouthernAfrica',4,'TEAM'),(18,6,NULL,'Traveling/Africa/SouthernAfrica',4,'TEAM'),(19,14,'2015-02-02','work',6,'USER'),(20,15,'2015-02-02',NULL,6,'USER'),(21,16,'2015-02-02','fun',6,'USER'),(22,17,'2015-02-02','fun',6,'USER'),(23,18,'2015-02-04','fun/music',6,'USER'),(24,19,'2015-02-04','fun/games',6,'USER'),(25,20,'2015-02-04','work',6,'USER'),(26,21,'2015-02-04','fun/music',6,'USER'),(27,22,'2015-02-04','other/other2',6,'USER'),(28,23,'2015-02-04','fun',6,'USER'),(29,24,'2015-02-04','fun/other',6,'USER'),(30,25,'2015-02-04','fun/other',6,'USER'),(31,26,'2015-02-04',NULL,6,'USER');
+INSERT INTO `bookmark_reference` VALUES (1,1,0,NULL,'Tutorials/Angular',3,'USER'),(2,2,0,NULL,'Tutorials',3,'USER'),(3,3,0,NULL,'_root',3,'USER'),(4,1,0,NULL,'Favorite/Folder1',4,'TEAM'),(5,3,0,NULL,'Favorite/Folder2',4,'TEAM'),(6,4,0,NULL,'_root',4,'TEAM'),(7,5,0,NULL,'Tutorials/UI',3,'USER'),(8,6,0,NULL,'Tutorials/UI',3,'USER'),(9,7,0,NULL,'Fun',3,'USER'),(10,7,0,NULL,'Tutorials/Angular',3,'USER'),(11,7,0,NULL,'Tutorials/UI',3,'USER'),(12,1,0,NULL,'Traveling/Europe',4,'TEAM'),(13,2,0,NULL,'Traveling/Europe',4,'TEAM'),(14,7,0,NULL,'Traveling/Europe',4,'TEAM'),(15,3,0,NULL,'Traveling/Africa',4,'TEAM'),(16,4,0,NULL,'Traveling/Africa/SouthernAfrica',4,'TEAM'),(17,5,0,NULL,'Traveling/Africa/SouthernAfrica',4,'TEAM'),(18,6,0,NULL,'Traveling/Africa/SouthernAfrica',4,'TEAM'),(19,14,0,'2015-02-02','work',6,'USER'),(20,15,2,'2015-02-02','_root',6,'USER'),(21,16,0,'2015-02-02','fun',6,'USER'),(22,17,1,'2015-02-02','fun',6,'USER'),(23,18,1,'2015-02-04','fun/music',6,'USER'),(24,19,0,'2015-02-04','fun/games',6,'USER'),(25,20,1,'2015-02-04','work',6,'USER'),(26,21,0,'2015-02-04','fun/music',6,'USER'),(27,22,0,'2015-02-04','other/other2',6,'USER'),(28,23,2,'2015-02-04','fun',6,'USER'),(29,24,0,'2015-02-04','fun/other',6,'USER'),(30,25,1,'2015-02-04','fun/other',6,'USER'),(31,26,0,'2015-02-04','_root',6,'USER'),(32,27,1,'2015-02-05','_root',6,'USER'),(34,32,2,'2015-02-17','work',6,'USER');
 /*!40000 ALTER TABLE `bookmark_reference` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `provideruserlocaluser`
+--
+
+DROP TABLE IF EXISTS `provideruserlocaluser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `provideruserlocaluser` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `localUserId` varchar(255) DEFAULT NULL,
+  `providerId` varchar(255) DEFAULT NULL,
+  `providerUserId` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `provideruserlocaluser`
+--
+
+LOCK TABLES `provideruserlocaluser` WRITE;
+/*!40000 ALTER TABLE `provideruserlocaluser` DISABLE KEYS */;
+/*!40000 ALTER TABLE `provideruserlocaluser` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -146,6 +172,38 @@ INSERT INTO `user` VALUES (1,'habra2@mail.ru','ww','www','wwwwwwww','wwww'),(2,'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `userconnection`
+--
+
+DROP TABLE IF EXISTS `userconnection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userconnection` (
+  `providerId` varchar(255) NOT NULL,
+  `providerUserId` varchar(255) NOT NULL,
+  `userId` varchar(255) NOT NULL,
+  `accessToken` varchar(255) DEFAULT NULL,
+  `displayName` varchar(255) DEFAULT NULL,
+  `expireTime` decimal(19,2) DEFAULT NULL,
+  `imageUrl` varchar(255) DEFAULT NULL,
+  `profileUrl` varchar(255) DEFAULT NULL,
+  `rank` int(11) DEFAULT NULL,
+  `refreshToken` varchar(255) DEFAULT NULL,
+  `secret` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`providerId`,`providerUserId`,`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userconnection`
+--
+
+LOCK TABLES `userconnection` WRITE;
+/*!40000 ALTER TABLE `userconnection` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userconnection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users_roles`
 --
 
@@ -188,7 +246,7 @@ CREATE TABLE `users_teams` (
   PRIMARY KEY (`userTeamId`),
   KEY `FKADD2FC7F5C69AB94` (`teamId`),
   CONSTRAINT `FKADD2FC7F5C69AB94` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +255,7 @@ CREATE TABLE `users_teams` (
 
 LOCK TABLES `users_teams` WRITE;
 /*!40000 ALTER TABLE `users_teams` DISABLE KEYS */;
-INSERT INTO `users_teams` VALUES (1,'accepted',1,1),(2,'accepted',2,2),(3,'accepted',3,3),(4,'owner',3,4),(6,'accepted',2,4),(8,'owner',2,5);
+INSERT INTO `users_teams` VALUES (1,'accepted',1,1),(2,'accepted',2,2),(3,'accepted',3,3),(4,'owner',3,4),(6,'accepted',2,4),(8,'owner',2,5),(9,'owner',6,4);
 /*!40000 ALTER TABLE `users_teams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -210,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-04 23:58:06
+-- Dump completed on 2015-02-19 14:50:17

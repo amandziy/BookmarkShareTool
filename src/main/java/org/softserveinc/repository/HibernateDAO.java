@@ -5,21 +5,24 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.softserveinc.domain.*;
 import org.softserveinc.util.ReferenceType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.*;
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
 public class HibernateDAO {
 
-    @Autowired
+    @Inject
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
@@ -224,4 +227,10 @@ public class HibernateDAO {
         return providerUserLocalUser;
     }
 
+    public long countReferencesByPath(String path) {
+        Session session = getSessionFactory().getCurrentSession();
+        Criteria criteria = session.createCriteria(BookmarkReference.class);
+        criteria.add(Restrictions.eq("path", path));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
 }
