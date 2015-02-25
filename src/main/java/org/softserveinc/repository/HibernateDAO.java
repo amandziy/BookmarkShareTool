@@ -212,6 +212,11 @@ public class HibernateDAO {
         session.save(providerUserLocalUser);
     }
 
+    public void updateProviderUserLocalUser(ProviderUserLocalUser providerUserLocalUser) {
+        Session session = getSessionFactory().getCurrentSession();
+        session.update(providerUserLocalUser);
+    }
+
     public ProviderUserLocalUser getProviderUserLocalUserByProvIdAndProvUserId(String providerId, String providerUserId) {
         Session session = getSessionFactory().getCurrentSession();
         Criteria criteria = session.createCriteria(ProviderUserLocalUser.class);
@@ -232,5 +237,14 @@ public class HibernateDAO {
         Criteria criteria = session.createCriteria(BookmarkReference.class);
         criteria.add(Restrictions.eq("path", path));
         return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
+    public List<ProviderUserLocalUser> getProviderUserLocalUserByLocalUserId(String userId) {
+        Session session = getSessionFactory().getCurrentSession();
+        Criteria criteria = session.createCriteria(ProviderUserLocalUser.class);
+        criteria.add(Restrictions.eq("localUserId", userId));
+
+        List<ProviderUserLocalUser> listOfProviderUserLocalUser = (List<ProviderUserLocalUser>) criteria.list();
+
+        return listOfProviderUserLocalUser;
     }
 }
