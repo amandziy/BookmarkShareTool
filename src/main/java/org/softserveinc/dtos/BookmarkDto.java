@@ -1,19 +1,19 @@
-package org.softserveinc.DTO;
+package org.softserveinc.dtos;
 
-public class BookmarkDTO {
+public class BookmarkDto {
 
     private String name;
     private String url;
     private String path;
     private String description;
 
-    public BookmarkDTO(String name, String url, String path, String description) {
+    public BookmarkDto(String name, String url, String path, String description) {
         this.name = name;
         this.url = url;
         this.path = path;
         this.description = description;
     }
-    public BookmarkDTO() {
+    public BookmarkDto() {
     }
 
     public String getName() {

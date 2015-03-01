@@ -1,6 +1,6 @@
 package org.softserveinc.service;
 
-import org.softserveinc.DTO.BookmarkDTO;
+import org.softserveinc.dtos.BookmarkDto;
 import org.softserveinc.domain.Bookmark;
 import org.softserveinc.domain.BookmarkReference;
 import org.softserveinc.domain.User;
@@ -20,7 +20,7 @@ public class BookmarkService {
     @Inject
     HibernateDAO hibernateDAO;
 
-    public void saveBookmark(BookmarkDTO bookmarkDTO) {
+    public void saveBookmark(BookmarkDto bookmarkDTO) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Bookmark bookmark= new Bookmark(bookmarkDTO.getName(),bookmarkDTO.getUrl(),bookmarkDTO.getDescription());
         Integer bookmarkID= hibernateDAO.saveBookmarkIntoDB(bookmark);

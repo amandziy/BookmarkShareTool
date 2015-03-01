@@ -1,7 +1,7 @@
 package org.softserveinc.rest;
 
 import com.google.gson.Gson;
-import org.softserveinc.DTO.BookmarkDTO;
+import org.softserveinc.dtos.BookmarkDto;
 import org.softserveinc.converters.JsonBuilderDirector;
 import org.softserveinc.service.BookmarkService;
 import org.softserveinc.util.ReferenceType;
@@ -23,7 +23,7 @@ public class BookmarkRestController {
     JsonFactory jsonFactory;
 
     @RequestMapping(value = "/rest/bookmark", method = RequestMethod.POST)
-    public void createNewBookmark(@RequestBody BookmarkDTO bookmarkDTO) {
+    public void createNewBookmark(@RequestBody BookmarkDto bookmarkDTO) {
         bookmarkService.saveBookmark(bookmarkDTO);
     }
 

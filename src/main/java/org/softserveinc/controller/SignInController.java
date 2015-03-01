@@ -1,7 +1,9 @@
 package org.softserveinc.controller;
 
+import com.google.common.collect.Sets;
 import org.softserveinc.domain.User;
 import org.softserveinc.domain.UserRole;
+import org.softserveinc.dtos.enums.Role;
 import org.softserveinc.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
 
 @Controller
-public class AccessController {
+public class SignInController {
 
     @Inject
     private UserService userService;
+
     @Inject
     private AuthenticationManager authenticationManager;
 
@@ -46,7 +48,9 @@ public class AccessController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String addUser(User user, HttpServletRequest request, HttpServletResponse responsee) {
-        user.setRoles(new HashSet<UserRole>(){{add(new UserRole(2, "ROLE_USER"));}});
+        user.setRoles(Sets.newHashSet(
+                new UserRole(Role.ROLE_USER.getId(), Role.ROLE_USER.name()))
+        );
         userService.saveUserIntoDB(user);
         authenticateUserAndSetSession(user, request);
         return "redirect:/userProfile";
@@ -63,7 +67,7 @@ public class AccessController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String getSingUpPage(Model model) {
+    public String getSignUpPage(Model model) {
         model.addAttribute("user", new User());
         return "access/signup";
 
